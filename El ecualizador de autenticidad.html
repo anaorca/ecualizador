@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramienta: El Ecualizador de Autenticidad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom slider styles */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #d1d5db; /* Gray-300 */
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+        input[type="range"]:hover {
+            opacity: 1;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #0d9488; /* Teal-600 */
+            cursor: pointer;
+            border: 4px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #0d9488; /* Teal-600 */
+            cursor: pointer;
+            border: 4px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .tab-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-button.active {
+            background-color: #0d9488; /* Teal-600 */
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .feedback-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+        }
+        .feedback-section.show {
+            max-height: 1000px; /* Adjust as needed */
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-teal-800">Herramienta: El Ecualizador de Autenticidad</h1>
+            <p class="text-md md:text-lg text-gray-600 mt-2">Analiza cada escenario, ajusta los deslizadores y luego comprueba tu análisis.</p>
+        </header>
+
+        <!-- Scenario Tabs -->
+        <div class="mb-8 flex flex-wrap justify-center gap-2 md:gap-4" id="tabs-container">
+            <button class="tab-button active font-semibold py-2 px-4 rounded-full bg-white shadow-sm" data-target="scenario1">Escenario 1: Medicina</button>
+            <button class="tab-button font-semibold py-2 px-4 rounded-full bg-white shadow-sm" data-target="scenario2">Escenario 2: Periodismo</button>
+            <button class="tab-button font-semibold py-2 px-4 rounded-full bg-white shadow-sm" data-target="scenario3">Escenario 3: Chef</button>
+        </div>
+
+        <!-- Scenarios Container -->
+        <div id="scenarios-container">
+            <!-- Scenario 1: Medicina -->
+            <div id="scenario1" class="scenario-content bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                <h2 class="text-xl font-bold text-teal-700 mb-2">Escenario 1: Examen de Anatomía</h2>
+                <p class="text-gray-600 mb-6">Estudiantes de primer año de medicina responden un examen en línea de opción múltiple sobre anatomía. El examen se realiza en un aula de computación, de forma individual y cronometrada. La nota es el porcentaje de respuestas correctas.</p>
+                <div class="space-y-6 slider-container">
+                    <!-- Sliders will be injected here -->
+                </div>
+                <button class="evaluate-button mt-8 w-full bg-teal-600 text-white font-semibold py-3 rounded-lg hover:bg-teal-700 transition-colors">Evaluar mi Análisis</button>
+                <div class="feedback-section border-t border-gray-200">
+                    <!-- Feedback will be injected here -->
+                </div>
+            </div>
+
+            <!-- Scenario 2: Periodismo -->
+            <div id="scenario2" class="scenario-content bg-white p-6 md:p-8 rounded-2xl shadow-lg hidden">
+                <h2 class="text-xl font-bold text-teal-700 mb-2">Escenario 2: Reportaje de Investigación</h2>
+                <p class="text-gray-600 mb-6">Estudiantes de periodismo, en equipos, deben escribir un reportaje de investigación sobre un problema de su campus. Tienen acceso a la biblioteca y a internet, y pueden entrevistar a personas. El producto final es un artículo en formato de revista que se publica en un blog de la clase y es evaluado por el profesor con una rúbrica compartida previamente.</p>
+                <div class="space-y-6 slider-container">
+                    <!-- Sliders will be injected here -->
+                </div>
+                <button class="evaluate-button mt-8 w-full bg-teal-600 text-white font-semibold py-3 rounded-lg hover:bg-teal-700 transition-colors">Evaluar mi Análisis</button>
+                <div class="feedback-section border-t border-gray-200">
+                     <!-- Feedback will be injected here -->
+                </div>
+            </div>
+
+            <!-- Scenario 3: Chef -->
+            <div id="scenario3" class="scenario-content bg-white p-6 md:p-8 rounded-2xl shadow-lg hidden">
+                <h2 class="text-xl font-bold text-teal-700 mb-2">Escenario 3: Desafío Culinario</h2>
+                <p class="text-gray-600 mb-6">Un aspirante a chef debe preparar un plato principal en 60 minutos en una cocina profesional, utilizando una "caja misteriosa" de ingredientes. Es observado por tres chefs profesionales que evalúan el plato basándose en el sabor, la presentación y la técnica, deliberan y le dan retroalimentación verbal inmediata.</p>
+                <div class="space-y-6 slider-container">
+                    <!-- Sliders will be injected here -->
+                </div>
+                 <button class="evaluate-button mt-8 w-full bg-teal-600 text-white font-semibold py-3 rounded-lg hover:bg-teal-700 transition-colors">Evaluar mi Análisis</button>
+                <div class="feedback-section border-t border-gray-200">
+                     <!-- Feedback will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dimensions = [
+                { id: 'tarea', name: 'La Tarea' },
+                { id: 'fisico', name: 'El Contexto Físico' },
+                { id: 'social', name: 'El Contexto Social' },
+                { id: 'producto', name: 'La Forma del Producto' },
+                { id: 'criterios', name: 'Los Criterios y Estándares' }
+            ];
+            const levels = ['Bajo', 'Medio', 'Alto'];
+            const levelColors = ['bg-red-500', 'bg-yellow-500', 'bg-green-500'];
+
+            const expertAnalysis = {
+                scenario1: {
+                    tarea: { value: 0, feedback: 'La tarea es de baja complejidad cognitiva; se centra en recordar y reconocer, no en aplicar o crear.' },
+                    fisico: { value: 0, feedback: 'Un aula de computación es un entorno artificial y controlado, muy diferente a un entorno clínico real.' },
+                    social: { value: 0, feedback: 'La evaluación es un esfuerzo individual y aislado, mientras que la práctica profesional es altamente colaborativa.' },
+                    producto: { value: 0, feedback: 'El resultado es una nota, un artefacto puramente académico sin valor o propósito fuera del examen.' },
+                    criterios: { value: 0, feedback: 'Los criterios son opacos (solo correcto/incorrecto) y no describen la calidad del desempeño.' }
+                },
+                scenario2: {
+                    tarea: { value: 2, feedback: 'La tarea es compleja, poco estructurada y requiere investigación y síntesis, un pensamiento de orden superior.' },
+                    fisico: { value: 1, feedback: 'Usa recursos reales (internet, biblioteca), pero el entorno de publicación (blog de clase) tiene una fidelidad media.' },
+                    social: { value: 2, feedback: 'El trabajo en equipo y la realización de entrevistas reflejan una alta autenticidad social.' },
+                    producto: { value: 1, feedback: 'Un artículo se asemeja a un producto profesional, pero su audiencia limitada (la clase) le da una autenticidad media.' },
+                    criterios: { value: 2, feedback: 'El uso de una rúbrica compartida hace que los criterios sean transparentes y multidimensionales, como en el mundo profesional.' }
+                },
+                scenario3: {
+                    tarea: { value: 2, feedback: 'La tarea es muy compleja, requiere creatividad, gestión del tiempo y aplicación de técnicas bajo presión.' },
+                    fisico: { value: 2, feedback: 'Una cocina profesional con herramientas reales representa un entorno de máxima fidelidad.' },
+                    social: { value: 2, feedback: 'Ser evaluado por un panel de expertos y recibir feedback directo simula una dinámica profesional de alto nivel.' },
+                    producto: { value: 2, feedback: 'El producto es un plato real y tangible, exactamente lo que un chef produciría en su trabajo.' },
+                    criterios: { value: 2, feedback: 'Los criterios (sabor, presentación, técnica) son los estándares auténticos de la industria culinaria.' }
+                }
+            };
+
+            const scenarios = document.querySelectorAll('.scenario-content');
+            const tabsContainer = document.getElementById('tabs-container');
+            const tabButtons = document.querySelectorAll('.tab-button');
+
+            // --- FUNCTIONS ---
+
+            function createSlider(dimension) {
+                const wrapper = document.createElement('div');
+                const header = document.createElement('div');
+                header.className = 'flex justify-between items-center mb-2';
+                const label = document.createElement('label');
+                label.className = 'font-semibold text-gray-700';
+                label.textContent = dimension.name;
+                const valueDisplay = document.createElement('span');
+                valueDisplay.className = 'font-bold text-lg px-3 py-1 rounded-full text-white text-sm';
+                valueDisplay.id = `${dimension.id}-value`;
+                header.appendChild(label);
+                header.appendChild(valueDisplay);
+                const sliderInput = document.createElement('input');
+                sliderInput.type = 'range';
+                sliderInput.min = '0';
+                sliderInput.max = '2';
+                sliderInput.step = '1';
+                sliderInput.value = '1'; // Default to Medium
+                sliderInput.dataset.dimensionId = dimension.id;
+                wrapper.appendChild(header);
+                wrapper.appendChild(sliderInput);
+                sliderInput.addEventListener('input', (e) => updateSliderDisplay(e.target));
+                return wrapper;
+            }
+
+            function updateSliderDisplay(slider) {
+                const value = parseInt(slider.value);
+                const dimensionId = slider.dataset.dimensionId;
+                const scenarioContainer = slider.closest('.scenario-content');
+                const valueDisplay = scenarioContainer.querySelector(`#${dimensionId}-value`);
+                valueDisplay.textContent = levels[value];
+                valueDisplay.className = `font-bold text-lg px-3 py-1 rounded-full text-white text-sm ${levelColors[value]}`;
+            }
+
+            function initializeSliders() {
+                scenarios.forEach(scenario => {
+                    const sliderContainer = scenario.querySelector('.slider-container');
+                    sliderContainer.innerHTML = '';
+                    dimensions.forEach(dim => {
+                        const sliderElement = createSlider(dim);
+                        sliderContainer.appendChild(sliderElement);
+                        updateSliderDisplay(sliderElement.querySelector('input'));
+                    });
+                });
+            }
+
+            function handleTabClick(e) {
+                const targetId = e.target.dataset.target;
+                if (!targetId) return;
+                tabButtons.forEach(button => button.classList.remove('active'));
+                e.target.classList.add('active');
+                scenarios.forEach(scenario => {
+                    scenario.id === targetId ? scenario.classList.remove('hidden') : scenario.classList.add('hidden');
+                });
+            }
+
+            function evaluate(e) {
+                const scenarioDiv = e.target.closest('.scenario-content');
+                const scenarioId = scenarioDiv.id;
+                const userSliders = scenarioDiv.querySelectorAll('input[type="range"]');
+                const expertData = expertAnalysis[scenarioId];
+                const feedbackSection = scenarioDiv.querySelector('.feedback-section');
+                
+                let feedbackHTML = `<h3 class="text-xl font-bold text-center mt-6 mb-4">Resultados del Análisis</h3><div class="space-y-4">`;
+
+                userSliders.forEach(slider => {
+                    const dimensionId = slider.dataset.dimensionId;
+                    const userValue = parseInt(slider.value);
+                    const expertValue = expertData[dimensionId].value;
+                    const expertFeedback = expertData[dimensionId].feedback;
+
+                    const isCorrect = userValue === expertValue;
+                    const resultColor = isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50';
+                    
+                    feedbackHTML += `
+                        <div class="p-4 border-l-4 rounded-r-lg ${resultColor}">
+                            <p class="font-semibold text-gray-800">${dimensions.find(d => d.id === dimensionId).name}</p>
+                            <div class="flex items-center justify-between mt-2 text-sm">
+                                <span>Tu análisis: <strong class="px-2 py-0.5 rounded ${levelColors[userValue]} text-white">${levels[userValue]}</strong></span>
+                                <span>Análisis experto: <strong class="px-2 py-0.5 rounded ${levelColors[expertValue]} text-white">${levels[expertValue]}</strong></span>
+                            </div>
+                            <p class="mt-2 text-gray-600 text-sm">${expertFeedback}</p>
+                        </div>
+                    `;
+                });
+
+                feedbackHTML += `</div>`;
+                feedbackSection.innerHTML = feedbackHTML;
+                feedbackSection.classList.add('show');
+            }
+
+            // --- INITIALIZATION ---
+            initializeSliders();
+            tabsContainer.addEventListener('click', handleTabClick);
+            document.querySelectorAll('.evaluate-button').forEach(button => {
+                button.addEventListener('click', evaluate);
+            });
+        });
+    </script>
+</body>
+</html>
